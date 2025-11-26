@@ -1,20 +1,45 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Mohammed Sinan - Portfolio
 
-# Run and deploy your AI Studio app
+A high-performance, immersive portfolio website featuring custom Islamic calligraphy animations, procedural geometric backgrounds, and smooth scroll interactions.
 
-This contains everything you need to run your app locally.
+## 🌟 Features
 
-View your app in AI Studio: https://ai.studio/apps/drive/1uYgjzII2aZ5s1eOCX7Zn8FAOepNuIg_Q
+-   **Custom Islamic Calligraphy Animation**: Interactive particle system using Unicode presentation forms of Arabic calligraphy.
+-   **Procedural Background**: "Calligraphy Grid" background using custom hand-drawn designs.
+-   **Smooth Scrolling**: Custom physics-based scroll hook for a premium feel.
+-   **Performance Optimized**: Fast preloader, efficient Canvas rendering, and optimized assets.
+-   **Responsive Design**: Fully responsive layout with mobile-optimized navigation and interactions.
 
-## Run Locally
+## 🛠️ Tech Stack
 
-**Prerequisites:**  Node.js
+-   **Framework**: React (Vite)
+-   **Styling**: Tailwind CSS
+-   **Animations**: GSAP, HTML5 Canvas
+-   **Language**: TypeScript
 
+## 🚀 Getting Started
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/sinaaanck/Sinaaanck-portfolio.git
+    ```
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
+3.  **Run development server**:
+    ```bash
+    npm run dev
+    ```
+
+## 📦 Deployment
+
+This project is configured for deployment on **Vercel**.
+
+1.  Push to GitHub.
+2.  Import project in Vercel.
+3.  Vercel will automatically detect Vite and deploy.
+
+## 📄 License
+
+MIT License - Copyright (c) 2025 Mohammed Sinan
