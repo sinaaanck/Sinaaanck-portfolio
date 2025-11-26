@@ -17,7 +17,6 @@ export const IslamicPatternCanvas = () => {
         let particles: Particle[] = [];
 
         // Configuration
-        // Abstract Arabic Calligraphy Words & Designs (Non-religious)
         const calligraphyDesigns = [
             'ﮮ', 'ﮯ', 'ﮰ', 'ﮱ', // Decorative tails
             '﴾', '﴿', // Ornate parentheses
@@ -26,10 +25,7 @@ export const IslamicPatternCanvas = () => {
             '،'  // Arabic comma (stylized)
         ];
 
-        // Target text
         const targetText = "MOHAMMED SINAN";
-
-        // Mouse state
         let mouse = { x: -1000, y: -1000, active: false };
 
         class Particle {
@@ -37,22 +33,30 @@ export const IslamicPatternCanvas = () => {
             y: number;
             vx: number;
             vy: number;
-            content: string;
+            originX: number;
+            originY: number;
             targetX: number | null;
             targetY: number | null;
             isTarget: boolean;
+            content: string;
             color: string;
             baseColor: string;
             size: number;
             angle: number;
             spin: number;
 
+            // Physics properties
+            springFactor: number;
+            friction: number;
+            timeOffset: number;
+
             constructor(x: number, y: number) {
                 this.x = x;
                 this.y = y;
-                // Slow, fluid movement
-                this.vx = (Math.random() - 0.5) * 0.2;
-                this.vy = (Math.random() - 0.5) * 0.2;
+                this.originX = x;
+                this.originY = y;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
 
                 this.content = calligraphyDesigns[Math.floor(Math.random() * calligraphyDesigns.length)];
 
@@ -61,43 +65,87 @@ export const IslamicPatternCanvas = () => {
                 this.isTarget = false;
 
                 // Silver / White Theme
-                // HSL: 210deg (Cool Silver/Blue-ish White). 
                 const hue = 210;
                 const saturation = 10;
                 const lightness = 40 + Math.random() * 40;
                 this.baseColor = `hsla(${hue}, ${saturation}%, ${lightness}%, ${Math.random() * 0.4 + 0.1})`;
                 this.color = this.baseColor;
 
-                this.size = Math.random() * 25 + 20; // Larger for calligraphy words
+                this.size = Math.random() * 25 + 20;
                 this.angle = Math.random() * Math.PI * 2;
-                this.spin = (Math.random() - 0.5) * 0.005; // Slower spin for elegance
+                this.spin = (Math.random() - 0.5) * 0.002;
+
+                // Physics init
+                this.springFactor = 0.05 + Math.random() * 0.05;
+                this.friction = 0.90 + Math.random() * 0.05;
+                this.timeOffset = Math.random() * 100;
             }
 
             update() {
+                // 1. Target Attraction (Spring Physics)
                 if (this.isTarget && this.targetX !== null && this.targetY !== null) {
-                    // Fluid attraction
                     const dx = this.targetX - this.x;
                     const dy = this.targetY - this.y;
-                    this.x += dx * 0.08;
-                    this.y += dy * 0.08;
 
-                    // Bright White/Silver for text
-                    this.color = 'hsla(210, 20%, 90%, 0.95)';
-                    this.angle += 0.02;
+                    this.vx += dx * this.springFactor;
+                    this.vy += dy * this.springFactor;
+
+                    // Brighten color when forming text
+                    this.color = 'hsla(210, 20%, 95%, 0.95)';
+
+                    // Align rotation
+                    const targetAngle = 0;
+                    const dAngle = targetAngle - this.angle;
+                    this.angle += dAngle * 0.1;
+
                 } else {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    this.angle += this.spin;
-                    this.color = this.baseColor;
+                    // 2. Idle "Breathing" Motion
+                    const time = Date.now() * 0.001;
+                    const floatX = Math.sin(time + this.timeOffset) * 0.5;
+                    const floatY = Math.cos(time + this.timeOffset * 0.5) * 0.5;
 
-                    if (this.x < 0 || this.x > width) this.vx *= -1;
-                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                    this.vx += floatX * 0.01;
+                    this.vy += floatY * 0.01;
+
+                    // 3. Mouse Repulsion (Fluid Displacement)
+                    if (mouse.active) {
+                        const dx = mouse.x - this.x;
+                        const dy = mouse.y - this.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        const repulsionRadius = 150;
+
+                        if (dist < repulsionRadius) {
+                            const force = (repulsionRadius - dist) / repulsionRadius;
+                            const angle = Math.atan2(dy, dx);
+                            const repulseX = Math.cos(angle) * force * 2;
+                            const repulseY = Math.sin(angle) * force * 2;
+
+                            this.vx -= repulseX;
+                            this.vy -= repulseY;
+                        }
+                    }
+
+                    this.color = this.baseColor;
+                    this.angle += this.spin;
+                }
+
+                // Apply Physics
+                this.vx *= this.friction;
+                this.vy *= this.friction;
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounds wrapping
+                if (!this.isTarget) {
+                    if (this.x < -50) this.x = width + 50;
+                    if (this.x > width + 50) this.x = -50;
+                    if (this.y < -50) this.y = height + 50;
+                    if (this.y > height + 50) this.y = -50;
                 }
             }
 
             draw() {
                 ctx!.fillStyle = this.color;
-                // Use Amiri for the calligraphy
                 ctx!.font = `${this.size}px 'Amiri', serif`;
                 ctx!.save();
                 ctx!.translate(this.x, this.y);
@@ -109,15 +157,12 @@ export const IslamicPatternCanvas = () => {
 
         const init = () => {
             particles = [];
-            // Reduced count for performance and elegance (less clutter)
-            const particleCount = Math.floor((width * height) / 7000);
-
+            const particleCount = Math.floor((width * height) / 8000); // Slightly reduced density
             for (let i = 0; i < particleCount; i++) {
                 particles.push(new Particle(Math.random() * width, Math.random() * height));
             }
         };
 
-        // Function to sample points from text
         const getPointsFromText = (text: string) => {
             const tempCanvas = document.createElement('canvas');
             const tempCtx = tempCanvas.getContext('2d');
@@ -126,19 +171,16 @@ export const IslamicPatternCanvas = () => {
             tempCanvas.width = width;
             tempCanvas.height = height;
 
-            // Use Reem Kufi for the Target Text
-            const fontSize = Math.min(width / 10, 120);
+            const fontSize = Math.min(width / 8, 140); // Slightly larger text
             tempCtx.font = `700 ${fontSize}px 'Reem Kufi', sans-serif`;
             tempCtx.fillStyle = 'white';
             tempCtx.textAlign = 'center';
             tempCtx.textBaseline = 'middle';
-
-            // Draw text in center
             tempCtx.fillText(text, width / 2, height / 2);
 
             const imageData = tempCtx.getImageData(0, 0, width, height).data;
             const points: { x: number, y: number }[] = [];
-            const step = 7; // Less dense for better performance
+            const step = 6;
 
             for (let y = 0; y < height; y += step) {
                 for (let x = 0; x < width; x += step) {
@@ -156,30 +198,33 @@ export const IslamicPatternCanvas = () => {
         const animate = () => {
             ctx.clearRect(0, 0, width, height);
 
-            particles.forEach(p => {
-                p.isTarget = false;
-            });
+            // Reset targets
+            particles.forEach(p => p.isTarget = false);
 
             if (mouse.active) {
                 if (textPoints.length === 0) {
                     textPoints = getPointsFromText(targetText);
                 }
 
-                const offsetX = mouse.x - width / 2;
-                const offsetY = mouse.y - height / 2;
+                // Assign particles to text points
+                // We shuffle or just assign sequentially. 
+                // For fluid effect, closest particle to point is better but expensive.
+                // Sequential is fast and looks okay with enough particles.
 
                 let pointIndex = 0;
                 for (let i = 0; i < particles.length; i++) {
                     if (pointIndex >= textPoints.length) break;
 
                     const p = particles[i];
+                    // Only attract if particle is somewhat close to preserve some background particles?
+                    // Or just use all available particles.
+
                     const target = textPoints[pointIndex];
                     p.isTarget = true;
-                    p.targetX = target.x + offsetX * 0.2; // Reduced parallax
-                    p.targetY = target.y + offsetY * 0.2;
+                    p.targetX = target.x;
+                    p.targetY = target.y;
 
                     pointIndex++;
-                    if (pointIndex >= textPoints.length) pointIndex = 0;
                 }
             }
 
@@ -220,7 +265,6 @@ export const IslamicPatternCanvas = () => {
         };
 
         resize();
-        init(); // Initialize particles
         animate();
 
         window.addEventListener('resize', resize);
