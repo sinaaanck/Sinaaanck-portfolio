@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>Sinaaan CK - Web Developer in Kerala, Kochi, Malappuram, GCC</title>
+  <meta name="description"
+    content="Sinaaan CK is a professional Web Developer based in Kerala, serving clients in Kochi, Malappuram, and the GCC. Specializing in modern, high-performance websites and digital experiences." />
+  <meta name="keywords"
+    content="Web Developer, Kerala, Kochi, Malappuram, GCC, Frontend Developer, React Developer, Portfolio, Web Design" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sinaaanck.com/" />
+  <meta property="og:title" content="Sinaaan CK - Web Developer in Kerala, Kochi, Malappuram, GCC" />
+  <meta property="og:description" content="Professional Web Developer specializing in modern digital experiences." />
+  <meta property="og:image" content="https://sinaaanck.com/og-image.jpg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://sinaaanck.com/" />
+  <meta property="twitter:title" content="Sinaaan CK - Web Developer in Kerala, Kochi, Malappuram, GCC" />
+  <meta property="twitter:description"
+    content="Professional Web Developer specializing in modern digital experiences." />
+  <meta property="twitter:image" content="https://sinaaanck.com/og-image.jpg" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind CSS (CDN for immediate rendering and robust styling) -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#FFFFFF",
+            "primary-dark": "#e2e8f0",
+            "background-light": "#F8FAFC",
+            "background-dark": "#050505",
+            "surface-dark": "#0a0a0a",
+          },
+          fontFamily: {
+            display: ["Space Grotesk", "sans-serif"],
+            manrope: ["Manrope", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.618rem",
+            lg: "1rem",
+            xl: "1.618rem",
+          },
+          spacing: {
+            '18': '4.5rem',
+            '22': '5.5rem',
+          },
+          animation: {
+            "spin-slow": "spin 12s linear infinite",
+            "float": "float 6s ease-in-out infinite",
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            }
+          }
+        },
+      },
+    }
+  </script>
+
+  <!-- Custom CSS Styles -->
+  <style>
+    /* --- Base Styles --- */
+    body {
+      background-color: #050505;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      cursor: none;
+    }
+
+    /* --- Custom Scrollbar --- */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #050505;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    /* --- Animated Gradient Background --- */
+    .gradient-bg-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: -2;
+      background: #050505;
+      pointer-events: none;
+    }
+
+    .gradient-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.3;
+      will-change: transform;
+    }
+
+    /* --- Global Cursor Spotlight --- */
+    /* Removed as replaced by CustomCursor */
+
+    /* --- Button Border Beam Animation --- */
+    .btn-beam-container {
+      position: relative;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .btn-beam-container::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150%;
+      height: 500%;
+      background: conic-gradient(from 0deg, transparent 0deg, transparent 340deg, #ffffff 360deg);
+      transform: translate(-50%, -50%) rotate(0deg);
+      animation: rotate-beam 4s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .btn-beam-container:hover::before {
+      opacity: 0.8;
+    }
+
+    .btn-beam-content {
+      position: relative;
+      z-index: 1;
+      border-radius: 9999px;
+      background-color: #050505;
+      background-clip: padding-box;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes rotate-beam {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    /* --- Infinite Marquee (Tech Stack) --- */
+    .marquee-mask {
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .marquee-content {
+      display: flex;
+      width: max-content;
+      animation: marquee 60s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* --- Spotlight Card Effect (Work Section) --- */
+    .spotlight-card {
+      --mouse-x: 0px;
+      --mouse-y: 0px;
+      position: relative;
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .spotlight-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.06), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .spotlight-card:hover::before {
+      opacity: 1;
+    }
+
+    /* --- 404 Page Effects (CRT/Glitch) --- */
+    .crt-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(0deg,
+          rgba(0, 0, 0, 0.15),
+          rgba(0, 0, 0, 0.15) 1px,
+          transparent 1px,
+          transparent 2px);
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0.3;
+    }
+
+    .glitch-text {
+      position: relative;
+      color: white;
+    }
+
+    .glitch-text::before,
+    .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #050505;
+    }
+
+    .glitch-text::before {
+      left: 2px;
+      text-shadow: -2px 0 #ff00c1;
+      clip: rect(24px, 550px, 90px, 0);
+      animation: glitch-anim 3s infinite linear alternate-reverse;
+    }
+
+    .glitch-text::after {
+      left: -2px;
+      text-shadow: -2px 0 #00fff9;
+      clip: rect(85px, 550px, 140px, 0);
+      animation: glitch-anim 2.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% {
+        clip: rect(10px, 9999px, 80px, 0);
+        transform: skew(0.5deg);
+      }
+
+      5% {
+        clip: rect(50px, 9999px, 20px, 0);
+        transform: skew(0.5deg);
+      }
+
+      10% {
+        clip: rect(10px, 9999px, 90px, 0);
+        transform: skew(-0.5deg);
+      }
+
+      15% {
+        clip: rect(90px, 9999px, 10px, 0);
+        transform: skew(-0.5deg);
+      }
+
+      100% {
+        clip: rect(30px, 9999px, 60px, 0);
+        transform: skew(0);
+      }
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
+    "gsap": "https://aistudiocdn.com/gsap@^3.13.0",
+    "gsap/": "https://aistudiocdn.com/gsap@^3.13.0/",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
+  }
+}
+</script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+
+<body class="bg-[#050505] font-display text-slate-200 antialiased">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
