@@ -45,7 +45,9 @@ export const Navbar = () => {
               </a>
             ))}
             <a
-              href="#"
+              href="https://drive.google.com/file/d/1sVoJrpMdlZn_TCHccgwWAg7wWXQRklUz/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-6 py-2.5 text-sm font-medium text-white bg-transparent rounded-full border border-white/20 hover:bg-white hover:text-black hover:border-transparent transition-all duration-300 active:scale-95 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
             >
               Resume
