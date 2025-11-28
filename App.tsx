@@ -13,6 +13,7 @@ import { IslamicPatternCanvas } from './components/IslamicPatternCanvas';
 import { ComplexIslamicBackground } from './components/ComplexIslamicBackground';
 import { CustomCursor } from './components/CustomCursor';
 import { ProgressiveBlur } from './components/ProgressiveBlur';
+import { AsciiScene } from './components/ascii-scene';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 // Layout Wrapper
@@ -64,6 +65,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </HashRouter>
+          <AsciiScene />
         </>
       )}
     </div>
