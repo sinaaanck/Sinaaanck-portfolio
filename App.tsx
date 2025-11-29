@@ -2,6 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Navbar } from './components/Navbar';
+import { Hero } from './components/Hero';
+import { WorkSection } from './components/WorkSection';
+import { ContactSection } from './components/ContactSection';
+import { Footer } from './components/Footer';
+import { Preloader } from './components/Preloader';
+import { NotFound } from './components/NotFound';
+import { IslamicPatternCanvas } from './components/IslamicPatternCanvas';
+import { ComplexIslamicBackground } from './components/ComplexIslamicBackground';
+import { CustomCursor } from './components/CustomCursor';
+import { ProgressiveBlur } from './components/ProgressiveBlur';
+import { AsciiScene } from './components/ascii-scene';
+import { useSmoothScroll } from './hooks/useSmoothScroll';
 
 // Layout Wrapper
 const MainContent = () => (
@@ -39,11 +51,22 @@ function App() {
 
       {/* Islamic Pattern Animation Canvas */}
       <IslamicPatternCanvas />
-      <AsciiScene />
-    </>
-  )
-}
-    </div >
+
+
+      {loading && <Preloader onComplete={() => setLoading(false)} />}
+
+      {!loading && (
+        <>
+          <HashRouter>
+            <Routes>
+              <Route path="/" element={<MainContent />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </HashRouter>
+          <AsciiScene />
+        </>
+      )}
+    </div>
   );
 }
 
