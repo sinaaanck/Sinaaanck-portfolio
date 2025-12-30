@@ -73,11 +73,11 @@ export const IslamicPatternCanvas = () => {
 
                 this.size = Math.random() * 25 + 20;
                 this.angle = Math.random() * Math.PI * 2;
-                this.spin = (Math.random() - 0.5) * 0.002;
+                this.spin = (Math.random() - 0.5) * 0.0015; // Slower, smoother rotation
 
-                // Physics init
-                this.springFactor = 0.05 + Math.random() * 0.05;
-                this.friction = 0.90 + Math.random() * 0.05;
+                // Enhanced physics for smoother motion
+                this.springFactor = 0.03 + Math.random() * 0.03; // Softer spring
+                this.friction = 0.92 + Math.random() * 0.04; // Smoother deceleration
                 this.timeOffset = Math.random() * 100;
             }
 
@@ -99,26 +99,27 @@ export const IslamicPatternCanvas = () => {
                     this.angle += dAngle * 0.1;
 
                 } else {
-                    // 2. Idle "Breathing" Motion
-                    const time = Date.now() * 0.001;
-                    const floatX = Math.sin(time + this.timeOffset) * 0.5;
-                    const floatY = Math.cos(time + this.timeOffset * 0.5) * 0.5;
+                    // 2. Enhanced Idle "Breathing" Motion with organic feel
+                    const time = Date.now() * 0.0008; // Slower, more relaxed
+                    const floatX = Math.sin(time + this.timeOffset) * 0.4;
+                    const floatY = Math.cos(time * 0.7 + this.timeOffset * 0.5) * 0.4;
+                    const floatZ = Math.sin(time * 1.3 + this.timeOffset * 0.3) * 0.2; // Extra dimension
 
-                    this.vx += floatX * 0.01;
-                    this.vy += floatY * 0.01;
+                    this.vx += (floatX + floatZ) * 0.008;
+                    this.vy += floatY * 0.008;
 
-                    // 3. Mouse Repulsion (Fluid Displacement)
+                    // 3. Mouse Repulsion (Smoother Fluid Displacement)
                     if (mouse.active) {
                         const dx = mouse.x - this.x;
                         const dy = mouse.y - this.y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
-                        const repulsionRadius = 150;
+                        const repulsionRadius = 180; // Larger interaction area
 
                         if (dist < repulsionRadius) {
-                            const force = (repulsionRadius - dist) / repulsionRadius;
+                            const force = Math.pow((repulsionRadius - dist) / repulsionRadius, 2); // Quadratic falloff
                             const angle = Math.atan2(dy, dx);
-                            const repulseX = Math.cos(angle) * force * 2;
-                            const repulseY = Math.sin(angle) * force * 2;
+                            const repulseX = Math.cos(angle) * force * 1.5;
+                            const repulseY = Math.sin(angle) * force * 1.5;
 
                             this.vx -= repulseX;
                             this.vy -= repulseY;

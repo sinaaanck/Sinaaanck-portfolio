@@ -6,7 +6,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const techStack = [
   { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-  { name: "n8n", icon: "https://cdn.simpleicons.org/n8n/white" }, 
+  { name: "n8n", icon: "https://cdn.simpleicons.org/n8n/white" },
   { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
   { name: "UiPath", icon: "https://cdn.simpleicons.org/uipath/white" },
   { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
@@ -25,65 +25,70 @@ export const Hero = () => {
     const tl = gsap.timeline();
 
     gsap.set(textContainerRef.current, { opacity: 0 });
-    gsap.set(techRef.current, { opacity: 0, y: 30 });
-    
+    gsap.set(techRef.current, { opacity: 0, y: 40 });
+
     if (nameRef.current) {
       const letters = nameRef.current.querySelectorAll('.name-letter');
-      gsap.set(letters, { y: 100, opacity: 0, rotateX: -90 });
+      gsap.set(letters, { y: 120, opacity: 0, rotateX: -90, scale: 0.8 });
     }
 
     tl.to(textContainerRef.current, {
       opacity: 1,
-      duration: 0.1
+      duration: 0.2
     })
-    .to(".name-letter", {
-      y: 0,
-      opacity: 1,
-      rotateX: 0,
-      stagger: 0.05,
-      duration: 1.2,
-      ease: "power4.out"
-    })
-    .fromTo(".hero-subtitle", 
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
-      "-=0.8"
-    )
-    .fromTo(".hero-desc",
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
-      "-=0.8"
-    )
-    .to(techRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 1,
-      ease: "power3.out"
-    }, "-=0.6");
+      .to(".name-letter", {
+        y: 0,
+        opacity: 1,
+        rotateX: 0,
+        scale: 1,
+        stagger: 0.04,
+        duration: 1.4,
+        ease: "elastic.out(1, 0.6)"
+      })
+      .fromTo(".hero-subtitle",
+        { opacity: 0, y: 30, filter: 'blur(10px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: "power4.out" },
+        "-=0.9"
+      )
+      .fromTo(".hero-desc",
+        { opacity: 0, y: 25, filter: 'blur(8px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, ease: "power4.out" },
+        "-=0.9"
+      )
+      .to(techRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power4.out"
+      }, "-=0.7");
 
+    // Smooth parallax scroll effect
     if (textContainerRef.current) {
       gsap.to(textContainerRef.current, {
-          y: 100, 
-          scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top top",
-              end: "bottom top",
-              scrub: true
-          }
+        y: 120,
+        ease: "none",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.5
+        }
       });
     }
   }, []);
 
   const handleNameHover = () => {
     gsap.to(".name-letter", {
-      y: -10,
+      y: -15,
+      color: '#ffffff',
+      textShadow: '0 0 30px rgba(255,255,255,0.3)',
       stagger: {
-          each: 0.05,
-          yoyo: true,
-          repeat: 1
+        each: 0.03,
+        yoyo: true,
+        repeat: 1
       },
-      duration: 0.3,
-      ease: "sine.inOut"
+      duration: 0.4,
+      ease: "elastic.out(1, 0.5)"
     });
   };
 
@@ -92,12 +97,12 @@ export const Hero = () => {
   return (
     <div ref={containerRef} className="relative min-h-screen w-full overflow-hidden text-white flex flex-col items-center justify-center pt-20 md:pt-0 selection:bg-white/20">
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-          <div className="w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-white/[0.03] rounded-full blur-[120px] animate-pulse"></div>
+        <div className="w-[80vw] h-[80vw] max-w-[800px] max-h-[800px] bg-white/[0.03] rounded-full blur-[120px] animate-pulse"></div>
       </div>
 
       <main className="text-center px-6 z-10 w-full max-w-[1200px] mx-auto flex flex-col items-center relative">
         <div ref={textContainerRef} className="flex flex-col items-center mb-16 animate-float">
-          <h1 
+          <h1
             ref={nameRef}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white leading-[1.1] mb-8 cursor-default"
             onMouseEnter={handleNameHover}
@@ -109,25 +114,25 @@ export const Hero = () => {
                 </span>
               ))}
             </span>
-            
+
             <span className="hero-subtitle text-gray-500 block text-3xl md:text-5xl font-light font-manrope mt-4 tracking-normal">
               Web Developer & AI Enthusiast
             </span>
           </h1>
-        
+
           <p className="hero-desc max-w-[38rem] mx-auto text-lg md:text-xl text-gray-400 font-light leading-relaxed">
             Crafting sophisticated digital experiences where <span className="text-white font-medium">cutting-edge technology</span> meets <span className="text-white font-medium">elegant design</span>.
           </p>
         </div>
-        
+
         <div ref={techRef} className="mt-12 w-full opacity-0 translate-y-8 overflow-hidden">
           <p className="text-[10px] text-gray-600 mb-8 tracking-[0.3em] uppercase font-bold text-center">Tech Arsenal</p>
           <div className="marquee-mask w-full relative border-t border-b border-white/5 py-6">
             <div className="marquee-content flex items-center">
               {[...techStack, ...techStack, ...techStack, ...techStack].map((tech, idx) => (
-                <div 
-                    key={idx} 
-                    className="flex items-center gap-3 mx-8 opacity-60 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-default group"
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 mx-8 opacity-60 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-default group"
                 >
                   <div className="bg-white/5 backdrop-blur-sm p-2 rounded-lg group-hover:scale-110 transition-transform duration-300 border border-white/5 group-hover:border-white/20">
                     <img src={tech.icon} alt={tech.name} className="w-8 h-8 md:w-10 md:h-10 object-contain" />

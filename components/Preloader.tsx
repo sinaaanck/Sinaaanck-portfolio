@@ -27,36 +27,53 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
         fillOpacity: 0
       });
 
+      // Elegant stroke draw animation
       tl.to(pathRef.current, {
         strokeDashoffset: 0,
-        duration: 1.0,
-        ease: "power2.inOut"
+        duration: 1.2,
+        ease: "power3.inOut"
       })
+        // Subtle rotation as it draws
+        .to(pathRef.current.parentElement, {
+          rotation: 2,
+          duration: 0.6,
+          ease: "sine.inOut"
+        }, "-=0.8")
+        .to(pathRef.current.parentElement, {
+          rotation: 0,
+          duration: 0.4,
+          ease: "sine.out"
+        })
+        // Fill reveal with glow effect
         .to(pathRef.current, {
           fillOpacity: 1,
-          duration: 0.6,
+          duration: 0.8,
           ease: "power2.out"
         }, "-=0.3")
+        // Text reveal with spring effect
         .to(textRef.current, {
           opacity: 1,
           y: 0,
-          letterSpacing: "0.05em",
-          duration: 0.8,
-          ease: "power3.out"
-        }, "-=0.3")
-        .to({}, { duration: 0.4 })
+          letterSpacing: "0.08em",
+          duration: 1,
+          ease: "elastic.out(1, 0.8)"
+        }, "-=0.4")
+        // Hold moment
+        .to({}, { duration: 0.5 })
+        // Smooth exit animation
         .to([textRef.current, pathRef.current], {
           opacity: 0,
-          y: -20,
-          scale: 0.95,
-          duration: 0.4,
-          ease: "power2.in"
+          y: -30,
+          scale: 0.9,
+          duration: 0.5,
+          ease: "power3.in",
+          stagger: 0.05
         })
         .to(containerRef.current, {
           opacity: 0,
-          duration: 0.4,
-          ease: "power2.in"
-        });
+          duration: 0.5,
+          ease: "power3.in"
+        }, "-=0.2");
     } else {
       tl.to({}, { duration: 1 });
     }

@@ -23,18 +23,22 @@ export const useSmoothScroll = () => {
             const targetPosition = targetId === 'top' ? 0 : targetElement?.getBoundingClientRect().top! + window.pageYOffset;
             const startPosition = window.pageYOffset;
             const distance = targetPosition - startPosition;
-            const duration = 1500; // ms
+            const duration = 1800; // Slightly longer for smoother feel
             let start: number | null = null;
 
-            // Ease Out Quart: Fast start, slow end
-            const easeOutQuart = (t: number) => 1 - (--t) * t * t * t;
+            // Ease Out Expo: Ultra-smooth deceleration
+            const easeOutExpo = (t: number) => {
+                return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+            };
 
             const step = (timestamp: number) => {
                 if (!start) start = timestamp;
                 const progress = timestamp - start;
                 const percentage = Math.min(progress / duration, 1);
 
-                window.scrollTo(0, startPosition + distance * easeOutQuart(percentage));
+                // Apply easing with slight velocity dampening for extra smoothness
+                const easedProgress = easeOutExpo(percentage);
+                window.scrollTo(0, startPosition + distance * easedProgress);
 
                 if (progress < duration) {
                     animationFrameId = requestAnimationFrame(step);
