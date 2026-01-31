@@ -28,8 +28,8 @@ export const Navbar = () => {
       {/* Desktop Navbar */}
       <header
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 hidden md:block rounded-full px-2 ${scrolled
-            ? 'bg-white/10 backdrop-blur-xl border border-white/10'
-            : 'bg-white/5 backdrop-blur-sm border border-white/5'
+          ? 'bg-[#0a0a0a]/90 border border-white/5'
+          : 'bg-[#0a0a0a]/60 border border-white/5'
           }`}
       >
         <nav className="px-6 py-3">
@@ -39,7 +39,7 @@ export const Navbar = () => {
               href="#top"
               className="flex items-center gap-2.5 text-lg font-bold text-white hover:text-gray-200 transition-all duration-300 z-[100] relative group"
             >
-              <span className="w-9 h-9 bg-gradient-to-br from-white to-gray-300 text-black flex items-center justify-center rounded-xl font-display font-bold text-base transform group-hover:rotate-6 group-hover:scale-110 transition-all duration-300 shadow-lg">S</span>
+              <span className="w-9 h-9 bg-white text-black flex items-center justify-center rounded-xl font-display font-bold text-base transform group-hover:rotate-3 transition-all duration-300">S</span>
               <span className="font-display tracking-tight">Sinaaan</span>
             </a>
 
