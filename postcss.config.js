@@ -1,1 +1,5 @@
-// Not required for CDN setup
+export default {
+    plugins: {
+        '@tailwindcss/postcss': {}
+    }
+}
