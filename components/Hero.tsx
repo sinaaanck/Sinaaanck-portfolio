@@ -5,20 +5,18 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const techStack = [
-  // Programming Languages
+  // Programming & Scripting
   { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
   { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-  { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
   { name: "Bash", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" },
-  // IT Infrastructure
+  { name: "HTML", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+  { name: "CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+  // OS & Tools
   { name: "Linux", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
   { name: "Windows", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" },
-  { name: "Prometheus", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" },
-  { name: "Grafana", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" },
+  { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
   { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-  { name: "Ansible", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg" },
-  { name: "Nginx", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" },
-  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
+  { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
 ];
 
 export const Hero = () => {
@@ -127,12 +125,12 @@ export const Hero = () => {
               {[...techStack, ...techStack, ...techStack, ...techStack].map((tech, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-3 mx-8 opacity-60 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-default group"
+                  className="flex items-center gap-2 mx-6 opacity-60 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-default group"
                 >
-                  <div className="bg-white/5 backdrop-blur-sm p-2 rounded-lg group-hover:scale-110 transition-all duration-300 border border-white/5 group-hover:border-white/20 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:bg-white/10">
-                    <img src={tech.icon} alt={tech.name} className="w-8 h-8 md:w-10 md:h-10 object-contain group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
+                  <div className="bg-white/5 backdrop-blur-sm p-1.5 rounded-md group-hover:scale-105 transition-all duration-300 border border-white/5 group-hover:border-white/15 group-hover:bg-white/5">
+                    <img src={tech.icon} alt={tech.name} className="w-6 h-6 md:w-7 md:h-7 object-contain group-hover:drop-shadow-[0_0_3px_rgba(255,255,255,0.2)]" />
                   </div>
-                  <span className="hidden md:block text-gray-300 font-medium text-sm tracking-wide group-hover:text-white transition-colors">{tech.name}</span>
+                  <span className="hidden md:block text-gray-400 font-medium text-xs tracking-wide group-hover:text-gray-200 transition-colors">{tech.name}</span>
                 </div>
               ))}
             </div>
