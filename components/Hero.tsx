@@ -163,10 +163,9 @@ export const Hero = () => {
         {/* Text Container - Wraps name, title, and description */}
         <div ref={textContainerRef} className="flex flex-col items-center mb-16 animate-float">
 
-          {/* Name Heading with Letter-by-Letter Animation */}
           <h1
             ref={nameRef}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white leading-[1.1] mb-8 cursor-default"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white leading-[1.1] mb-8 cursor-default whitespace-nowrap"
           >
             {/* Name Letters Container */}
             <span className="block text-white drop-shadow-2xl">
@@ -182,18 +181,21 @@ export const Hero = () => {
               ))}
             </span>
 
-            {/* Job Title / Subtitle */}
-            <span className="hero-subtitle text-gray-500 block text-2xl md:text-4xl font-light font-manrope mt-4 tracking-normal">
-              IT Infrastructure & Network Operations Engineer
+            {/* Job Title / Subtitle - Fresher Diploma Profile */}
+            <span className="hero-subtitle text-gray-500 block text-lg sm:text-xl md:text-3xl lg:text-4xl font-light font-manrope mt-4 tracking-normal">
+              Network Support Engineer
+            </span>
+            <span className="hero-subtitle text-gray-600 block text-sm sm:text-base md:text-xl font-light font-manrope mt-2 tracking-normal">
+              Diploma in Computer Engineering
             </span>
           </h1>
 
-          {/* Description Paragraphs */}
-          <p className="hero-desc max-w-[42rem] mx-auto text-lg md:text-xl text-gray-400 font-light leading-relaxed">
-            Hands-on experience with <span className="text-white font-medium">NOC-style monitoring</span>, <span className="text-white font-medium">Linux servers</span>, Windows systems, networking fundamentals, and incident response workflows.
+          {/* Description Paragraphs - Fresher focused */}
+          <p className="hero-desc max-w-[42rem] mx-auto text-base sm:text-lg md:text-xl text-gray-400 font-light leading-relaxed">
+            Fresh graduate with hands-on training in <span className="text-white font-medium">Network Support</span>, <span className="text-white font-medium">System Administration</span>, and IT troubleshooting through practical lab environments.
           </p>
-          <p className="hero-desc max-w-[38rem] mx-auto text-base md:text-lg text-gray-500 font-light leading-relaxed mt-4">
-            Trained through real-world labs simulating enterprise and operations environments.
+          <p className="hero-desc max-w-[38rem] mx-auto text-sm sm:text-base md:text-lg text-gray-500 font-light leading-relaxed mt-4">
+            Eager to learn and grow in IT infrastructure, help desk support, and network operations roles.
           </p>
         </div>
 
