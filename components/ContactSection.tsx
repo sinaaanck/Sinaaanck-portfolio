@@ -262,8 +262,11 @@ export const ContactSection = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <span className="animate-spin material-symbols-outlined text-xl">progress_activity</span>
-                    <span>Processing...</span>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Sending...</span>
                   </>
                 ) : (
                   <>
@@ -279,13 +282,24 @@ export const ContactSection = () => {
                 <div className="relative mt-2">
                   <div className="absolute -inset-1 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl blur opacity-25"></div>
 
-                  <div className="relative flex items-center gap-4 bg-[#0a0a0a] border border-white/10 p-4 rounded-xl shadow-2xl">
-                    <div className="flex-shrink-0 flex h-12 w-12 items-center justify-center rounded-full bg-green-500/10 text-green-400 border border-green-500/20">
-                      <span className="material-symbols-outlined">check</span>
+                  <div className="relative flex items-center gap-4 bg-[#0a0a0a] border border-white/10 p-4 rounded-xl shadow-2xl overflow-hidden group">
+                    <div className="absolute inset-0 bg-green-500/5 group-hover:bg-green-500/10 transition-colors duration-500"></div>
+
+                    {/* Animated Check Icon */}
+                    <div className="relative flex-shrink-0 flex h-12 w-12 items-center justify-center rounded-full bg-green-500/10 text-green-400 border border-green-500/20">
+                      <svg className="w-6 h-6 animate-[scale-in_0.4s_ease-out_backwards]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-white font-medium text-sm md:text-base">Message Sent Successfully</h4>
-                      <p className="text-gray-400 text-xs md:text-sm mt-0.5">Thank you for reaching out. I'll get back to you shortly.</p>
+
+                    <div className="relative flex-1">
+                      <h4 className="text-white font-medium text-sm md:text-base">Message Sent!</h4>
+                      <p className="text-gray-400 text-xs md:text-sm mt-0.5">I'll get back to you soon.</p>
+
+                      {/* Progress Line */}
+                      <div className="h-0.5 bg-green-500/30 mt-3 rounded-full overflow-hidden w-full">
+                        <div className="h-full bg-green-500 animate-[progress_5s_linear_forwards] origin-left w-full"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
