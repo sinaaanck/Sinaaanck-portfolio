@@ -182,19 +182,19 @@ export const Hero = () => {
             </span>
 
             {/* Job Title / Subtitle */}
-            <span className="hero-subtitle text-gray-500 block text-lg sm:text-xl md:text-3xl lg:text-4xl font-light font-manrope mt-4 tracking-normal">
+            <span className="hero-subtitle text-gray-300 block text-lg sm:text-xl md:text-3xl lg:text-4xl font-light font-manrope mt-4 tracking-normal">
               IT Infrastructure & Network Operations
             </span>
-            <span className="hero-subtitle text-gray-600 block text-sm sm:text-base md:text-xl font-light font-manrope mt-2 tracking-normal">
+            <span className="hero-subtitle text-gray-400 block text-sm sm:text-base md:text-xl font-light font-manrope mt-2 tracking-normal">
               System Administration • NOC Monitoring • Troubleshooting
             </span>
           </h1>
 
           {/* Description Paragraphs - Skills focused */}
-          <p className="hero-desc max-w-[42rem] mx-auto text-base sm:text-lg md:text-xl text-gray-400 font-light leading-relaxed">
+          <p className="hero-desc max-w-[42rem] mx-auto text-base sm:text-lg md:text-xl text-gray-300 font-light leading-relaxed">
             Skilled in <span className="text-white font-medium">NOC Operations</span>, <span className="text-white font-medium">System Administration</span>, and <span className="text-white font-medium">IT Infrastructure</span> management.
           </p>
-          <p className="hero-desc max-w-[38rem] mx-auto text-sm sm:text-base md:text-lg text-gray-500 font-light leading-relaxed mt-4">
+          <p className="hero-desc max-w-[38rem] mx-auto text-sm sm:text-base md:text-lg text-gray-400 font-light leading-relaxed mt-4">
             Hands-on experience with server troubleshooting, network diagnostics, and maintaining operational uptime.
           </p>
         </div>
