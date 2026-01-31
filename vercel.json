@@ -1,10 +1,4 @@
 {
-  "rewrites": [
-    {
-      "source": "/:path((?!assets|robots\\.txt|sitemap\\.xml|favicon\\.svg).*)",
-      "destination": "/index.html"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -27,15 +21,7 @@
         },
         {
           "key": "Strict-Transport-Security",
-          "value": "max-age=31536000; includeSubDomains; preload"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), usb=()"
-        },
-        {
-          "key": "X-DNS-Prefetch-Control",
-          "value": "on"
+          "value": "max-age=31536000; includeSubDomains"
         }
       ]
     },
