@@ -59,21 +59,21 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
           ease: "elastic.out(1, 0.8)"
         }, "-=0.4")
         // Hold moment
-        .to({}, { duration: 0.5 })
+        .to({}, { duration: 0.8 })
         // Smooth exit animation
         .to([textRef.current, pathRef.current], {
           opacity: 0,
           y: -30,
-          scale: 0.9,
-          duration: 0.5,
-          ease: "power3.in",
-          stagger: 0.05
+          scale: 0.95,
+          duration: 0.8,
+          ease: "power2.inOut",
+          stagger: 0.08
         })
         .to(containerRef.current, {
           opacity: 0,
-          duration: 0.5,
-          ease: "power3.in"
-        }, "-=0.2");
+          duration: 0.7,
+          ease: "power2.inOut"
+        }, "-=0.4");
     } else {
       tl.to({}, { duration: 1 });
     }

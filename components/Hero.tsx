@@ -5,6 +5,12 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const techStack = [
+  // Programming Languages
+  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+  { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+  { name: "Bash", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg" },
+  // IT Infrastructure
   { name: "Linux", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
   { name: "Windows", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" },
   { name: "Prometheus", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" },
@@ -77,20 +83,7 @@ export const Hero = () => {
     }
   }, []);
 
-  const handleNameHover = () => {
-    gsap.to(".name-letter", {
-      y: -15,
-      color: '#ffffff',
-      textShadow: '0 0 30px rgba(255,255,255,0.3)',
-      stagger: {
-        each: 0.03,
-        yoyo: true,
-        repeat: 1
-      },
-      duration: 0.4,
-      ease: "elastic.out(1, 0.5)"
-    });
-  };
+  // Name hover animation removed as per user request
 
   const nameString = "Mohammed Sinan";
 
@@ -105,7 +98,6 @@ export const Hero = () => {
           <h1
             ref={nameRef}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white leading-[1.1] mb-8 cursor-default"
-            onMouseEnter={handleNameHover}
           >
             <span className="block text-white drop-shadow-2xl">
               {nameString.split("").map((char, index) => (
@@ -137,10 +129,10 @@ export const Hero = () => {
                   key={idx}
                   className="flex items-center gap-3 mx-8 opacity-60 hover:opacity-100 transition-all duration-500 grayscale hover:grayscale-0 cursor-default group"
                 >
-                  <div className="bg-white/5 backdrop-blur-sm p-2 rounded-lg group-hover:scale-110 transition-transform duration-300 border border-white/5 group-hover:border-white/20">
-                    <img src={tech.icon} alt={tech.name} className="w-8 h-8 md:w-10 md:h-10 object-contain" />
+                  <div className="bg-white/5 backdrop-blur-sm p-2 rounded-lg group-hover:scale-110 transition-all duration-300 border border-white/5 group-hover:border-white/20 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:bg-white/10">
+                    <img src={tech.icon} alt={tech.name} className="w-8 h-8 md:w-10 md:h-10 object-contain group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
                   </div>
-                  <span className="hidden md:block text-gray-300 font-medium text-sm tracking-wide">{tech.name}</span>
+                  <span className="hidden md:block text-gray-300 font-medium text-sm tracking-wide group-hover:text-white transition-colors">{tech.name}</span>
                 </div>
               ))}
             </div>

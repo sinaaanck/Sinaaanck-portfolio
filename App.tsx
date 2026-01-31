@@ -55,17 +55,20 @@ function App() {
 
       {loading && <Preloader onComplete={() => setLoading(false)} />}
 
-      {!loading && (
-        <>
-          <HashRouter>
-            <Routes>
-              <Route path="/" element={<MainContent />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </HashRouter>
-          <AsciiScene />
-        </>
-      )}
+      {/* Content always rendered but hidden during loading to prevent flash */}
+      <div
+        className={`transition-all duration-1000 ease-out ${loading ? 'opacity-0 pointer-events-none translate-y-4' : 'opacity-100 translate-y-0'}`}
+        style={{ visibility: loading ? 'hidden' : 'visible' }}
+      >
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<MainContent />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </HashRouter>
+        {/* AsciiScene hidden - all effects disabled, was causing blank space after footer */}
+        {/* <AsciiScene /> */}
+      </div>
     </div>
   );
 }

@@ -168,7 +168,7 @@ export const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden p-4 sm:p-6 lg:p-8 font-manrope">
+    <section id="contact" className="relative flex w-full flex-col items-center justify-center overflow-hidden py-20 px-4 sm:px-6 lg:px-8 font-manrope">
 
       <div className="relative z-10 flex w-full max-w-4xl flex-col items-center justify-center">
         <div ref={containerRef} className="flex w-full flex-col items-center gap-8 rounded-xl p-4">

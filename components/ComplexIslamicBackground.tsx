@@ -51,7 +51,7 @@ export const ComplexIslamicBackground = () => {
                     // Organic wave pattern for opacity
                     const dist = Math.sqrt((x - width / 2) ** 2 + (y - height / 2) ** 2);
                     const wave = Math.sin(dist * 0.002 - time) * 0.5 + 0.5;
-                    const opacity = 0.02 + wave * 0.05; // Very subtle
+                    const opacity = 0.03 + wave * 0.08; // More visible animation
 
                     drawHexagon(x, y, opacity);
                 }
