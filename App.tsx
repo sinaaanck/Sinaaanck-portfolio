@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { WorkSection } from './components/WorkSection';
@@ -43,6 +44,7 @@ function App() {
   return (
     <div className="relative w-full overflow-hidden min-h-screen text-slate-200 font-display cursor-none">
       <SpeedInsights />
+      <Analytics />
       <CustomCursor />
       <ProgressiveBlur />
 
