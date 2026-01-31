@@ -105,7 +105,7 @@ export const Footer = () => {
 
         {/* Copyright Notice */}
         <p className="text-sm">
-          © 2025 Mohammed Sinan. All Rights Reserved.
+          © 2026 Mohammed Sinan. All Rights Reserved.
         </p>
       </div>
     </footer>
