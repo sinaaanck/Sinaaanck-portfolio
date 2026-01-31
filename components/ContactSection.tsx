@@ -1,12 +1,35 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Input validation utilities
+const sanitizeInput = (input: string): string => {
+  return input
+    .replace(/[<>]/g, '') // Remove potential HTML tags
+    .trim()
+    .slice(0, 1000); // Max length
+};
+
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email) && email.length <= 254;
+};
+
+const isValidName = (name: string): boolean => {
+  return name.length >= 2 && name.length <= 100 && !/[<>{}]/.test(name);
+};
+
+const isValidMessage = (message: string): boolean => {
+  return message.length >= 10 && message.length <= 2000;
+};
+
 export const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const lastSubmitTime = useRef<number>(0);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const successMsgRef = useRef<HTMLDivElement>(null);
@@ -54,25 +77,79 @@ export const ContactSection = () => {
     }
   }, [showSuccess]);
 
+  const validateForm = useCallback((formData: FormData): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const subject = formData.get('subject') as string;
+    const message = formData.get('message') as string;
+
+    if (!isValidName(name)) {
+      newErrors.name = 'Please enter a valid name (2-100 characters)';
+    }
+    if (!isValidEmail(email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    if (!subject || subject.length < 2 || subject.length > 200) {
+      newErrors.subject = 'Please enter a valid subject (2-200 characters)';
+    }
+    if (!isValidMessage(message)) {
+      newErrors.message = 'Please enter a message (10-2000 characters)';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Rate limiting: prevent submissions within 10 seconds
+    const now = Date.now();
+    if (now - lastSubmitTime.current < 10000) {
+      setErrors({ form: 'Please wait a moment before submitting again.' });
+      return;
+    }
+
     setIsSubmitting(true);
+    setErrors({});
 
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    // WEB3FORMS ACCESS KEY
-    formData.append("access_key", "e18701d3-6793-4754-98a8-656c52a2198d");
+    // Validate inputs
+    if (!validateForm(formData)) {
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Sanitize inputs before submission
+    const sanitizedData = new FormData();
+    sanitizedData.append('name', sanitizeInput(formData.get('name') as string));
+    sanitizedData.append('email', (formData.get('email') as string).trim().toLowerCase());
+    sanitizedData.append('subject', sanitizeInput(formData.get('subject') as string));
+    sanitizedData.append('message', sanitizeInput(formData.get('message') as string));
+
+    // Web3Forms Access Key (public key - validated by domain)
+    sanitizedData.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY || "e18701d3-6793-4754-98a8-656c52a2198d");
+
+    // Honeypot field
+    if (formData.get('botcheck')) {
+      setIsSubmitting(false);
+      return; // Bot detected
+    }
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData
+        body: sanitizedData
       });
 
       const data = await response.json();
 
       if (data.success) {
+        lastSubmitTime.current = now;
         setIsSubmitting(false);
         setShowSuccess(true);
         form.reset();
@@ -81,14 +158,12 @@ export const ContactSection = () => {
           setShowSuccess(false);
         }, 5000);
       } else {
-        console.error("Submission failed", data);
         setIsSubmitting(false);
-        alert("Something went wrong. Please try again.");
+        setErrors({ form: 'Something went wrong. Please try again.' });
       }
-    } catch (error) {
-      console.error("Error submitting form", error);
+    } catch {
       setIsSubmitting(false);
-      alert("Error connecting to the server.");
+      setErrors({ form: 'Error connecting to the server. Please try again.' });
     }
   };
 
@@ -106,7 +181,13 @@ export const ContactSection = () => {
             </p>
           </div>
 
-          <form className="w-full max-w-2xl space-y-6 mt-4 opacity-0" onSubmit={handleSubmit}>
+          {errors.form && (
+            <div className="w-full max-w-2xl p-4 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+              {errors.form}
+            </div>
+          )}
+
+          <form className="w-full max-w-2xl space-y-6 mt-4 opacity-0" onSubmit={handleSubmit} noValidate>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <label className="flex flex-col">
                 <p className="pb-2 text-sm font-medium leading-normal text-gray-400">
@@ -115,10 +196,13 @@ export const ContactSection = () => {
                 <input
                   required
                   name="name"
-                  className="form-input h-12 w-full resize-none overflow-hidden rounded-lg border border-white/10 bg-white/5 p-3 text-base font-normal leading-normal text-white placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:border-white focus:ring-0 focus:bg-white/10"
+                  maxLength={100}
+                  className={`form-input h-12 w-full resize-none overflow-hidden rounded-lg border ${errors.name ? 'border-red-500/50' : 'border-white/10'} bg-white/5 p-3 text-base font-normal leading-normal text-white placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:border-white focus:ring-0 focus:bg-white/10`}
                   placeholder="Enter your name"
                   type="text"
+                  autoComplete="name"
                 />
+                {errors.name && <span className="text-red-400 text-xs mt-1">{errors.name}</span>}
               </label>
               <label className="flex flex-col">
                 <p className="pb-2 text-sm font-medium leading-normal text-gray-400">
@@ -127,10 +211,13 @@ export const ContactSection = () => {
                 <input
                   required
                   name="email"
-                  className="form-input h-12 w-full resize-none overflow-hidden rounded-lg border border-white/10 bg-white/5 p-3 text-base font-normal leading-normal text-white placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:border-white focus:ring-0 focus:bg-white/10"
+                  maxLength={254}
+                  className={`form-input h-12 w-full resize-none overflow-hidden rounded-lg border ${errors.email ? 'border-red-500/50' : 'border-white/10'} bg-white/5 p-3 text-base font-normal leading-normal text-white placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:border-white focus:ring-0 focus:bg-white/10`}
                   placeholder="Enter your email"
                   type="email"
+                  autoComplete="email"
                 />
+                {errors.email && <span className="text-red-400 text-xs mt-1">{errors.email}</span>}
               </label>
             </div>
             <label className="flex flex-col">
@@ -140,10 +227,12 @@ export const ContactSection = () => {
               <input
                 required
                 name="subject"
-                className="form-input h-12 w-full resize-none overflow-hidden rounded-lg border border-white/10 bg-white/5 p-3 text-base font-normal leading-normal text-white placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:border-white focus:ring-0 focus:bg-white/10"
+                maxLength={200}
+                className={`form-input h-12 w-full resize-none overflow-hidden rounded-lg border ${errors.subject ? 'border-red-500/50' : 'border-white/10'} bg-white/5 p-3 text-base font-normal leading-normal text-white placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:border-white focus:ring-0 focus:bg-white/10`}
                 placeholder="Topic"
                 type="text"
               />
+              {errors.subject && <span className="text-red-400 text-xs mt-1">{errors.subject}</span>}
             </label>
             <label className="flex flex-col">
               <p className="pb-2 text-sm font-medium leading-normal text-gray-400">
@@ -152,21 +241,23 @@ export const ContactSection = () => {
               <textarea
                 required
                 name="message"
-                className="form-input min-h-36 w-full resize-none overflow-hidden rounded-lg border border-white/10 bg-white/5 p-3 text-base font-normal leading-normal text-white placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:border-white focus:ring-0 focus:bg-white/10"
+                maxLength={2000}
+                className={`form-input min-h-36 w-full resize-none overflow-hidden rounded-lg border ${errors.message ? 'border-red-500/50' : 'border-white/10'} bg-white/5 p-3 text-base font-normal leading-normal text-white placeholder:text-gray-600 transition-all duration-300 focus:outline-none focus:border-white focus:ring-0 focus:bg-white/10`}
                 placeholder="Write your message here..."
               ></textarea>
+              {errors.message && <span className="text-red-400 text-xs mt-1">{errors.message}</span>}
             </label>
 
-            {/* Honeypot for spam protection */}
-            <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+            {/* Honeypot for spam/bot protection */}
+            <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
 
             <div className="flex flex-col items-center pt-2 w-full">
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className={`group relative flex h-14 w-full sm:w-auto min-w-[200px] items-center justify-center gap-2 rounded-full px-8 text-base font-bold transition-all duration-300 ease-in-out ${isSubmitting
-                    ? 'bg-gray-800 cursor-not-allowed text-gray-500'
-                    : 'bg-white text-black hover:bg-gray-200 hover:scale-105 active:scale-95'
+                  ? 'bg-gray-800 cursor-not-allowed text-gray-500'
+                  : 'bg-white text-black hover:bg-gray-200 hover:scale-105 active:scale-95'
                   }`}
               >
                 {isSubmitting ? (

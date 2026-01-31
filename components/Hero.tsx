@@ -5,14 +5,14 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const techStack = [
-  { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-  { name: "n8n", icon: "https://cdn.simpleicons.org/n8n/white" },
-  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
-  { name: "UiPath", icon: "https://cdn.simpleicons.org/uipath/white" },
-  { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-  { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "Linux", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
+  { name: "Windows", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" },
+  { name: "Prometheus", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" },
+  { name: "Grafana", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" },
   { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-  { name: "Terraform", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" },
+  { name: "Ansible", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg" },
+  { name: "Nginx", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" },
+  { name: "AWS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" },
 ];
 
 export const Hero = () => {
@@ -115,13 +115,16 @@ export const Hero = () => {
               ))}
             </span>
 
-            <span className="hero-subtitle text-gray-500 block text-3xl md:text-5xl font-light font-manrope mt-4 tracking-normal">
-              Web Developer & AI Enthusiast
+            <span className="hero-subtitle text-gray-500 block text-2xl md:text-4xl font-light font-manrope mt-4 tracking-normal">
+              IT Infrastructure & Network Operations Engineer
             </span>
           </h1>
 
-          <p className="hero-desc max-w-[38rem] mx-auto text-lg md:text-xl text-gray-400 font-light leading-relaxed">
-            Crafting sophisticated digital experiences where <span className="text-white font-medium">cutting-edge technology</span> meets <span className="text-white font-medium">elegant design</span>.
+          <p className="hero-desc max-w-[42rem] mx-auto text-lg md:text-xl text-gray-400 font-light leading-relaxed">
+            Hands-on experience with <span className="text-white font-medium">NOC-style monitoring</span>, <span className="text-white font-medium">Linux servers</span>, Windows systems, networking fundamentals, and incident response workflows.
+          </p>
+          <p className="hero-desc max-w-[38rem] mx-auto text-base md:text-lg text-gray-500 font-light leading-relaxed mt-4">
+            Trained through real-world labs simulating enterprise and operations environments.
           </p>
         </div>
 

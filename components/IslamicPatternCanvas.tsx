@@ -196,7 +196,15 @@ export const IslamicPatternCanvas = () => {
 
         let textPoints: { x: number, y: number }[] = [];
 
+        let animationId: number;
+        let isVisible = true;
+
         const animate = () => {
+            if (!isVisible) {
+                animationId = requestAnimationFrame(animate);
+                return;
+            }
+
             ctx.clearRect(0, 0, width, height);
 
             // Reset targets
@@ -234,8 +242,14 @@ export const IslamicPatternCanvas = () => {
                 p.draw();
             });
 
-            requestAnimationFrame(animate);
+            animationId = requestAnimationFrame(animate);
         };
+
+        const handleVisibilityChange = () => {
+            isVisible = !document.hidden;
+        };
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
 
         const resize = () => {
             width = container.offsetWidth;
@@ -276,12 +290,15 @@ export const IslamicPatternCanvas = () => {
         container.addEventListener('touchend', handleMouseLeave);
 
         return () => {
+            cancelAnimationFrame(animationId);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
             window.removeEventListener('resize', resize);
             container.removeEventListener('mousemove', handleMouseMove);
             container.removeEventListener('touchmove', handleTouchMove);
             container.removeEventListener('touchstart', handleTouchMove);
             container.removeEventListener('mouseleave', handleMouseLeave);
             container.removeEventListener('touchend', handleMouseLeave);
+            particles = [];
         };
     }, []);
 
