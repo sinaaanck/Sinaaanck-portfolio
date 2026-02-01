@@ -65,13 +65,29 @@ The output will be in the `dist` directory.
 
 ## 📦 Deployment
 
-This project is optimized for deployment on **Vercel**.
+This project is optimized for deployment on **Vercel**, **Netlify**, and **Cloudflare Pages**.
 
-1.  Push your changes to GitHub.
-2.  Import the project into Vercel.
-3.  Vercel will automatically detect the Vite framework and configure the build settings.
-4.  Deploy!
+### Vercel (Recommended)
+1. Push changes to GitHub/GitLab.
+2. Import project into Vercel.
+3. Vercel automatically detects `vite` and configures settings.
+4. Deploy! creates `vercel.json` headers automatically.
+
+### Netlify
+1. Push to GitHub/GitLab.
+2. New Site from Git > Select Repo.
+3. Build command: `npm run build`
+4. Publish directory: `dist`
+5. `netlify.toml` handles all headers and redirects automatically.
+
+### Cloudflare Pages
+1. Connect GitHub/GitLab account.
+2. Select Repo > Begin setup.
+3. Framework preset: **Vite** or **React**.
+4. Build command: `npm run build`
+5. Output directory: `dist`
+6. `_headers` and `_redirects` files in `public/` handle permissions and routing.
 
 ## 📄 License
 
-MIT License - Copyright (c) 2025 Mohammed Sinan
+MIT License - Copyright (c) 2026 Mohammed Sinan
